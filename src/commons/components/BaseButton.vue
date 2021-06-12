@@ -45,7 +45,7 @@ $padding-y: 10px;
   padding: $padding-y $padding-x;
   min-width: $min-width;
   font-size: toRem($font-size-x-small);
-  color: white;
+  color: #ffffff;
   background-color: $red;
   border-radius: 60px;
   border: none;
