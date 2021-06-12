@@ -1,6 +1,9 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
+    <h1>Components</h1>
+    <BaseButton :text="'a'" @clicked="handleClick" :icon="'star'"></BaseButton>
+    <BaseButton :text="'disabled button'" disabled :icon="'list'" />
+    <h2>{{ msg }}</h2>
     <p>
       For a guide and recipes on how to configure / customize this project,<br />
       check out the
@@ -128,14 +131,19 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
+import BaseButton from "@/commons/components/BaseButton.vue";
 
 @Options({
   props: {
     msg: String,
   },
+  components: { BaseButton },
 })
 export default class HelloWorld extends Vue {
   msg!: string;
+  handleClick() {
+    console.log("click handled");
+  }
 }
 </script>
 
