@@ -9,8 +9,11 @@
 $width: toRem(315px);
 $height: toRem(60px);
 
+$minSize: toRem(315px);
+$maxSize: toRem(570px);
+
 .list-element {
-  width: $width;
+  min-width: $width;
   height: $height;
   display: flex;
   justify-content: space-between;

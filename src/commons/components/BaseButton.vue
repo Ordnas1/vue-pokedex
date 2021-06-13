@@ -2,6 +2,7 @@
   <button
     :disabled="disabled"
     class="btn"
+    :class="{ inactive: inactive }"
     v-on:click="onClick"
     data-test="clickable"
   >
@@ -26,6 +27,7 @@
 <style scoped lang="scss">
 $height: 44px;
 $min-width: 150px;
+$max-width: 275px;
 $padding-x: 20px;
 $padding-y: 10px;
 
@@ -44,6 +46,7 @@ $padding-y: 10px;
   height: $height;
   padding: $padding-y $padding-x;
   min-width: $min-width;
+  max-width: $max-width;
   font-size: toRem($font-size-x-small);
   color: #ffffff;
   background-color: $red;
@@ -56,12 +59,17 @@ $padding-y: 10px;
 
   &:active {
     background-color: $red-dark;
+    outline: none;
   }
 
-  &:disabled {
-    background-color: $gray;
-    cursor: not-allowed;
+  &:focus {
+    outline: none;
   }
+}
+
+.inactive {
+  background-color: $gray;
+  cursor: pointer;
 }
 </style>
 
@@ -72,6 +80,7 @@ class Props {
   text!: string;
   disabled?: boolean;
   icon?: "none" | "list" | "star";
+  inactive?: boolean;
 }
 
 export default class BaseButton extends Vue.with(Props) {

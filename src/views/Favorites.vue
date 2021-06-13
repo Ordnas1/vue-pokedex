@@ -1,19 +1,22 @@
 <template>
-  <div class="all">
+  <div class="favorites">
     <header>
       <search-bar v-model="searchText" />
     </header>
-    <base-list class="list" :pokemonData="testPokemonData" />
-    <button-group :view="'all'" />
+    <base-list
+      class="list"
+      :pokemonData="testPokemonData"
+      :onlyFavorites="true"
+    />
+    <button-group :view="'favorites'" />
   </div>
 </template>
 <style lang="scss" scoped>
-.all {
+.favorites {
   @include vertical-center-flex;
   justify-content: flex-start;
   height: 100vh;
 }
-
 header {
   margin-top: toRem(35px);
 }
@@ -23,7 +26,6 @@ header {
   overflow: scroll;
 }
 </style>
-
 <script lang="ts">
 import { Vue, Options } from "vue-class-component";
 
@@ -34,31 +36,11 @@ import ButtonGroup from "@/commons/components/BaseButtonGroup.vue";
 @Options({
   components: { SearchBar, BaseList, ButtonGroup },
 })
-export default class All extends Vue {
+export default class Favorites extends Vue {
   searchText = "";
 
   //remove when done
   testPokemonData = [
-    {
-      name: "Testmon",
-      isFavorite: false,
-    },
-    {
-      name: "pikachu",
-      isFavorite: true,
-    },
-    {
-      name: "Amoonguss",
-      isFavorite: true,
-    },
-    {
-      name: "Testmon",
-      isFavorite: false,
-    },
-    {
-      name: "pikachu",
-      isFavorite: true,
-    },
     {
       name: "Testmon",
       isFavorite: false,

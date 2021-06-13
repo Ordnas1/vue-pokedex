@@ -52,7 +52,7 @@ class Props {
   components: { ListElement, Button },
 })
 export default class BaseList extends Vue.with(Props) {
-  goToHome() {
+  goToHome(): void {
     this.$router.push({ name: "Home" });
   }
 }
