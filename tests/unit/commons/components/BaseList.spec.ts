@@ -2,7 +2,6 @@ import { mount } from "@vue/test-utils";
 
 import BaseList from "@/commons/components/BaseList.vue";
 
-
 import { PokemonListElement } from "@/types/PokemonDetails.interface";
 
 const testPokemonData: PokemonListElement[] = [

@@ -1,4 +1,5 @@
 export interface PokemonListElement {
+  id: number;
   name: string;
   isFavorite: boolean;
 }

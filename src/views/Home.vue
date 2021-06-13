@@ -47,7 +47,7 @@ $text-max-width: toRem(315px);
   margin-top: 50px;
 }
 </style>
-  
+
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import Button from "@/commons/components/BaseButton.vue";

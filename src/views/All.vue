@@ -31,11 +31,24 @@ import SearchBar from "@/commons/components/BaseSearchBar.vue";
 import BaseList from "@/commons/components/BaseList.vue";
 import ButtonGroup from "@/commons/components/BaseButtonGroup.vue";
 
+import PokeAPIAdapter from "@/modules/pokedex/adapters/PokeAPIAdapter";
+import HttpService from "@/commons/services/HttpService";
+
 @Options({
   components: { SearchBar, BaseList, ButtonGroup },
 })
 export default class All extends Vue {
   searchText = "";
+
+  async mounted() {
+    const adapter = new PokeAPIAdapter(new HttpService());
+    console.log(await adapter.getInitialPokemonList());
+    console.log(await adapter.getNextPokemonList());
+    console.log(await adapter.getNextPokemonList());
+    console.log(await adapter.getNextPokemonList());
+    console.log(adapter.nextList);
+    console.log("mounted");
+  }
 
   //remove when done
   testPokemonData = [
@@ -62,34 +75,6 @@ export default class All extends Vue {
     {
       name: "Testmon",
       isFavorite: false,
-    },
-    {
-      name: "pikachu",
-      isFavorite: true,
-    },
-    {
-      name: "Amoonguss",
-      isFavorite: true,
-    },
-    {
-      name: "Sax",
-      isFavorite: true,
-    },
-    {
-      name: "Testmon",
-      isFavorite: false,
-    },
-    {
-      name: "pikachu",
-      isFavorite: true,
-    },
-    {
-      name: "Amoonguss",
-      isFavorite: true,
-    },
-    {
-      name: "Sax",
-      isFavorite: true,
     },
   ];
 }
