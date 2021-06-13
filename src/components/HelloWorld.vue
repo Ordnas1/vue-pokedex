@@ -5,6 +5,12 @@
     <BaseButton :text="'disabled button'" disabled :icon="'list'" />
     <base-favorite-button />
     <base-favorite-button isFavorite="true" />
+
+    <ul class="list">
+      <base-list-element :text="'Pokemon 1'" />
+      <base-list-element :text="'Pokemon 2'" />
+      <base-list-element :text="'Pokemon 3'" />
+    </ul>
     <h2>{{ msg }}</h2>
     <p>
       For a guide and recipes on how to configure / customize this project,<br />
@@ -20,12 +26,13 @@
 import { Options, Vue } from "vue-class-component";
 import BaseButton from "@/commons/components/BaseButton.vue";
 import BaseFavoriteButton from "@/commons/components/BaseFavoriteButton.vue";
+import BaseListElement from "@/commons/components/BaseListElement.vue";
 
 @Options({
   props: {
     msg: String,
   },
-  components: { BaseButton, BaseFavoriteButton },
+  components: { BaseButton, BaseFavoriteButton, BaseListElement },
 })
 export default class HelloWorld extends Vue {
   msg!: string;
@@ -50,5 +57,14 @@ li {
 }
 a {
   color: #42b983;
+}
+
+.list {
+  background-color: whitesmoke;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 </style>

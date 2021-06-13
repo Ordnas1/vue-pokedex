@@ -10,8 +10,8 @@
 </template>
 
 <style scoped lang="scss">
-$size: 44px;
-$iconSize: 26px;
+$size: toRem(44px);
+$iconSize: toRem(26px);
 
 .btn {
   height: $size;
@@ -21,12 +21,11 @@ $iconSize: 26px;
   background-color: $white;
   cursor: pointer;
   color: gray;
-
-  @include transition-colors;
 }
 .icon {
   height: $iconSize;
   width: $iconSize;
+  @include transition-colors;
 }
 .favorite {
   color: $yellow;
@@ -41,7 +40,7 @@ class Props {
 }
 
 export default class BaseFavoriteButton extends Vue.with(Props) {
-  onClick() {
+  onClick(): void {
     this.$emit("clicked");
   }
 }
