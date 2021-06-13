@@ -8,10 +8,10 @@ import "./assets/styles/main.scss";
 
 //Font Awesome
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faStar, faList } from "@fortawesome/free-solid-svg-icons";
+import { faStar, faList, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-library.add(faStar, faList);
+library.add(faStar, faList, faSearch);
 
 createApp(App)
   .component("fa-icon", FontAwesomeIcon)

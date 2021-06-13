@@ -1,8 +1,12 @@
 <template>
   <div class="hello">
     <h1>Components</h1>
-    <BaseButton :text="'a'" @clicked="handleClick" :icon="'star'"></BaseButton>
-    <BaseButton :text="'disabled button'" disabled :icon="'list'" />
+    <base-button
+      :text="'a'"
+      @clicked="handleClick"
+      :icon="'star'"
+    ></base-button>
+    <base-button :text="'disabled button'" disabled :icon="'list'" />
     <base-favorite-button />
     <base-favorite-button isFavorite="true" />
 
@@ -10,6 +14,7 @@
       <base-list-element :text="'Pokemon 1'" />
       <base-list-element :text="'Pokemon 2'" />
       <base-list-element :text="'Pokemon 3'" />
+      <base-search-bar v-model="searchString" />
     </ul>
     <h2>{{ msg }}</h2>
     <p>
@@ -27,17 +32,25 @@ import { Options, Vue } from "vue-class-component";
 import BaseButton from "@/commons/components/BaseButton.vue";
 import BaseFavoriteButton from "@/commons/components/BaseFavoriteButton.vue";
 import BaseListElement from "@/commons/components/BaseListElement.vue";
+import BaseSearchBar from "@/commons/components/BaseSearchBar.vue";
 
 @Options({
   props: {
     msg: String,
   },
-  components: { BaseButton, BaseFavoriteButton, BaseListElement },
+  components: {
+    BaseButton,
+    BaseFavoriteButton,
+    BaseListElement,
+    BaseSearchBar,
+  },
 })
 export default class HelloWorld extends Vue {
   msg!: string;
+  searchString!: string;
   handleClick(): void {
     console.log("click handled");
+    console.log(this.searchString);
   }
 }
 </script>

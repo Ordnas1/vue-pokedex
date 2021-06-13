@@ -6,7 +6,7 @@
 </template>
 
 <style scoped lang="scss">
-$width: toRem(350px);
+$width: toRem(315px);
 $height: toRem(60px);
 
 .list-element {
