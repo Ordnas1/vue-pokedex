@@ -8,7 +8,7 @@
           The digital encyclopedia created by Professor Oak is an invaluable
           tool to Trainers in the Pokémon world.
         </p>
-        <Button class="btn" :text="'Get Started'" />
+        <Button class="btn" :text="'Get Started'" @clicked="goToAll" />
       </div>
     </div>
   </div>
@@ -26,10 +26,7 @@ $text-max-width: toRem(315px);
 
 .text-content {
   margin-top: 60px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  @include vertical-center-flex;
 }
 
 .title {
@@ -60,5 +57,9 @@ import Button from "@/commons/components/BaseButton.vue";
     Button,
   },
 })
-export default class Home extends Vue {}
+export default class Home extends Vue {
+  goToAll(): void {
+    this.$router.push("all");
+  }
+}
 </script>

@@ -10,6 +10,7 @@
   text-align: center;
   color: $dark;
   height: 100%;
+  background-color: $whiter;
 }
 
 #nav {

@@ -29,21 +29,21 @@ $height: toRem(60px);
 </style>
 
 <script lang="ts">
-import { Vue, Options } from "vue-class-component";
+import { Vue, Options, prop } from "vue-class-component";
 import BaseFavoriteButton from "./BaseFavoriteButton.vue";
 
 class Props {
   text!: string;
+  isFavorite = prop<boolean>({ default: false });
 }
 
 @Options({
   components: { BaseFavoriteButton },
 })
 export default class BaseListElement extends Vue.with(Props) {
-  isFavorite = false;
-
   toggleFavorite(): void {
     this.isFavorite = !this.isFavorite;
+    console.log("[Base List Element] toggling", this.isFavorite);
   }
 }
 </script>
