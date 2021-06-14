@@ -1,9 +1,10 @@
 <template>
-  <div class="all">
+  <the-loader v-if="loading" />
+  <div v-if="!loading" class="all">
     <header>
       <search-bar v-model="searchText" />
     </header>
-    <base-list class="list" :pokemonData="testPokemonData" />
+    <base-list class="list" :pokemonData="pokemonList" />
     <button-group :view="'all'" />
   </div>
 </template>
@@ -30,52 +31,27 @@ import { Vue, Options } from "vue-class-component";
 import SearchBar from "@/commons/components/BaseSearchBar.vue";
 import BaseList from "@/commons/components/BaseList.vue";
 import ButtonGroup from "@/commons/components/BaseButtonGroup.vue";
+import TheLoader from "@/commons/components/TheLoader.vue";
 
-import PokeAPIAdapter from "@/modules/pokedex/adapters/PokeAPIAdapter";
-import HttpService from "@/commons/services/HttpService";
+import { PokemonDetail } from "@/types/PokemonDetails.interface";
 
 @Options({
-  components: { SearchBar, BaseList, ButtonGroup },
+  components: { SearchBar, BaseList, ButtonGroup, TheLoader },
+  computed: {
+    pokemonList() {
+      return this.$store.state.pokedex.pokemonList;
+    },
+    loading() {
+      return this.$store.state.loading;
+    },
+  },
 })
 export default class All extends Vue {
+  loading!: boolean;
   searchText = "";
 
-  async mounted() {
-    const adapter = new PokeAPIAdapter(new HttpService());
-    console.log(await adapter.getInitialPokemonList());
-    console.log(await adapter.getNextPokemonList());
-    console.log(await adapter.getNextPokemonList());
-    console.log(await adapter.getNextPokemonList());
-    console.log(adapter.nextList);
-    console.log("mounted");
+  mounted() {
+    console.log("mounted", this.loading);
   }
-
-  //remove when done
-  testPokemonData = [
-    {
-      name: "Testmon",
-      isFavorite: false,
-    },
-    {
-      name: "pikachu",
-      isFavorite: true,
-    },
-    {
-      name: "Amoonguss",
-      isFavorite: true,
-    },
-    {
-      name: "Testmon",
-      isFavorite: false,
-    },
-    {
-      name: "pikachu",
-      isFavorite: true,
-    },
-    {
-      name: "Testmon",
-      isFavorite: false,
-    },
-  ];
 }
 </script>

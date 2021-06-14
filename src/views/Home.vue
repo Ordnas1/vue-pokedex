@@ -52,6 +52,9 @@ $text-max-width: toRem(315px);
 import { Options, Vue } from "vue-class-component";
 import Button from "@/commons/components/BaseButton.vue";
 
+import { ACTION_TYPES } from "@/modules/pokedex/store";
+import store from "@/store";
+
 @Options({
   components: {
     Button,
@@ -59,6 +62,8 @@ import Button from "@/commons/components/BaseButton.vue";
 })
 export default class Home extends Vue {
   goToAll(): void {
+    store.dispatch(ACTION_TYPES.INIT);
+    store.commit("loading");
     this.$router.push("all");
   }
 }

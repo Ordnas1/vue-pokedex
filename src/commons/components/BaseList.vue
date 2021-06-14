@@ -14,17 +14,13 @@
         v-if="item.isFavorite"
         data-test="element"
         :text="item.name"
-        :isFavorite="item.isFavorite"
+        :id="item.id"
       />
     </template>
   </ul>
   <ul v-else>
     <template v-for="item in pokemonData" v-bind:key="item.name">
-      <list-element
-        data-test="element"
-        :text="item.name"
-        :isFavorite="item.isFavorite"
-      />
+      <list-element data-test="element" :text="item.name" :id="item.id" />
     </template>
   </ul>
 </template>

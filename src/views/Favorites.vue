@@ -3,11 +3,7 @@
     <header>
       <search-bar v-model="searchText" />
     </header>
-    <base-list
-      class="list"
-      :pokemonData="testPokemonData"
-      :onlyFavorites="true"
-    />
+    <base-list class="list" :pokemonData="pokemonList" :onlyFavorites="true" />
     <button-group :view="'favorites'" />
   </div>
 </template>
@@ -33,46 +29,17 @@ import SearchBar from "@/commons/components/BaseSearchBar.vue";
 import BaseList from "@/commons/components/BaseList.vue";
 import ButtonGroup from "@/commons/components/BaseButtonGroup.vue";
 
+import store from "@/store";
+
 @Options({
   components: { SearchBar, BaseList, ButtonGroup },
+  computed: {
+    pokemonList() {
+      return this.$store.state.pokedex.pokemonList;
+    },
+  },
 })
 export default class Favorites extends Vue {
   searchText = "";
-
-  //remove when done
-  testPokemonData = [
-    {
-      name: "Testmon",
-      isFavorite: false,
-    },
-    {
-      name: "pikachu",
-      isFavorite: true,
-    },
-    {
-      name: "Amoonguss",
-      isFavorite: true,
-    },
-    {
-      name: "Sax",
-      isFavorite: true,
-    },
-    {
-      name: "Testmon",
-      isFavorite: false,
-    },
-    {
-      name: "pikachu",
-      isFavorite: true,
-    },
-    {
-      name: "Amoonguss",
-      isFavorite: true,
-    },
-    {
-      name: "Sax",
-      isFavorite: true,
-    },
-  ];
 }
 </script>

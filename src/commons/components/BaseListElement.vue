@@ -34,19 +34,38 @@ $maxSize: toRem(570px);
 <script lang="ts">
 import { Vue, Options, prop } from "vue-class-component";
 import BaseFavoriteButton from "./BaseFavoriteButton.vue";
+import { MUTATION_TYPES } from "@/modules/pokedex/store";
+import store from "@/store";
 
 class Props {
   text!: string;
-  isFavorite = prop<boolean>({ default: false });
+  id!: number;
 }
 
 @Options({
   components: { BaseFavoriteButton },
+  computed: {},
 })
 export default class BaseListElement extends Vue.with(Props) {
+  favorite = false;
+
+  get isFavorite(): boolean {
+    return this.favorite;
+  }
+
+  set isFavorite(value) {
+    this.favorite = value;
+  }
+
+  mounted(): void {
+    this.isFavorite = (store.state as any).pokedex.pokemonList[
+      Number(this.id) - 1
+    ].isFavorite;
+  }
   toggleFavorite(): void {
+    console.log("togglin");
+    store.commit(MUTATION_TYPES.TOGGLE_FAVORITE, Number(this.id));
     this.isFavorite = !this.isFavorite;
-    console.log("[Base List Element] toggling", this.isFavorite);
   }
 }
 </script>

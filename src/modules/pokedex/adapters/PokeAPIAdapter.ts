@@ -5,8 +5,11 @@ import {
   AllPokemonEndpoint,
 } from "@/types/PokeAPI.interface";
 
+import { capitalize } from "@/commons/helpers";
+
 export default class PokeAPIAdapter {
-  private rootUrl = "https://pokeapi.co/api/v2/pokemon/";
+  private elementsPerList = 50;
+  private rootUrl = `https://pokeapi.co/api/v2/pokemon?limit=${this.elementsPerList}`;
   private nextListUrl: string;
 
   constructor(private http: HttpService) {
@@ -49,7 +52,7 @@ export default class PokeAPIAdapter {
     return fetchedList.map(
       (pokemon: any): PokemonDetail => ({
         id: pokemon.id,
-        name: pokemon.name,
+        name: capitalize(pokemon.name),
         weight: pokemon.weight,
         height: pokemon.height,
         types: pokemon.types.map((item: any) => item.type.name),
