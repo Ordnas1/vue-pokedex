@@ -27,7 +27,7 @@
           </ul>
         </div>
         <div class="btn-group">
-          <BaseButton :text="'Share to my friends'" />
+          <BaseButton :text="'Share to my friends'" @click="handleShareButton" />
           <FavoriteButton
             :isFavorite="pokemon?.isFavorite"
             @clicked="toggleFavorite(pokemon?.id)"
@@ -136,6 +136,7 @@ class Props {
 })
 export default class PokemonDetailsModal extends Vue.with(Props) {
   $store!: any;
+  pokemon!: any;
   getTypes(types: string[]): string | undefined {
     if (!types) return;
     return types.join(", ");
@@ -148,6 +149,12 @@ export default class PokemonDetailsModal extends Vue.with(Props) {
   toggleFavorite(number: number): void {
     this.$store.commit(MUTATION_TYPES.TOGGLE_FAVORITE, number);
     this.$forceUpdate();
+  }
+
+  async handleShareButton(): Promise<void> {
+    const information = `${this.pokemon.name}, Height: ${this.pokemon.height}, Weight: ${this.pokemon.weight}, Types: ${this.pokemon.types}  `;
+    console.log(information)
+    await navigator.clipboard.writeText(information);
   }
 }
 </script>
