@@ -8,7 +8,7 @@ import {
 import { capitalize } from "@/commons/helpers";
 
 export default class PokeAPIAdapter {
-  private elementsPerList = 20;
+  private elementsPerList = 151;
   private rootUrl = `https://pokeapi.co/api/v2/pokemon`;
   private nextListUrl: string;
 

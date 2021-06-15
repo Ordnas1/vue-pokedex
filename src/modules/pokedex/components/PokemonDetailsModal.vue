@@ -1,8 +1,12 @@
 <template>
-  <div class="modal-wrapper" :class="{ close: !isOpen }">
+  <div
+    class="modal-wrapper"
+    :class="{ close: !isOpen }"
+    @click="closeModal($event)"
+  >
     <transition>
       <div class="modal-card">
-        <span class="close-icon" @click="closeModal"
+        <span class="close-icon"
           ><fa-icon class="icon" icon="times-circle"></fa-icon
         ></span>
         <div class="pokemon-img">
@@ -27,7 +31,10 @@
           </ul>
         </div>
         <div class="btn-group">
-          <BaseButton :text="'Share to my friends'" @click="handleShareButton" />
+          <BaseButton
+            :text="'Share to my friends'"
+            @click="handleShareButton"
+          />
           <FavoriteButton
             :isFavorite="pokemon?.isFavorite"
             @clicked="toggleFavorite(pokemon?.id)"
@@ -107,7 +114,14 @@
     text-align: left;
     display: flex;
     align-items: center;
+    border-bottom: 1px solid $gray;
   }
+}
+
+.btn-group {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
 }
 </style>
 <script lang="ts">
@@ -142,8 +156,12 @@ export default class PokemonDetailsModal extends Vue.with(Props) {
     return types.join(", ");
   }
 
-  closeModal(): void {
-    this.$store.commit(MUTATION_TYPES.TOGGLE_MODAL);
+  closeModal(event: Event): void | undefined {
+    const targetClass = (event.target as Element).classList.value;
+    console.log(targetClass);
+    if (targetClass === "modal-wrapper" || targetClass.includes("icon")) {
+      this.$store.commit(MUTATION_TYPES.TOGGLE_MODAL);
+    }
   }
 
   toggleFavorite(number: number): void {
@@ -153,7 +171,7 @@ export default class PokemonDetailsModal extends Vue.with(Props) {
 
   async handleShareButton(): Promise<void> {
     const information = `${this.pokemon.name}, Height: ${this.pokemon.height}, Weight: ${this.pokemon.weight}, Types: ${this.pokemon.types}  `;
-    console.log(information)
+    console.log(information);
     await navigator.clipboard.writeText(information);
   }
 }
