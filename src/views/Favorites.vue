@@ -1,4 +1,6 @@
 <template>
+  <pokemon-details-modal :isOpen="display" />
+  <the-loader v-if="loading" />
   <div class="favorites">
     <header>
       <search-bar v-model="searchText" />
@@ -28,14 +30,28 @@ import { Vue, Options } from "vue-class-component";
 import SearchBar from "@/commons/components/BaseSearchBar.vue";
 import BaseList from "@/commons/components/BaseList.vue";
 import ButtonGroup from "@/commons/components/BaseButtonGroup.vue";
+import TheLoader from "@/commons/components/TheLoader.vue";
+import PokemonDetailsModal from "@/modules/pokedex/components/PokemonDetailsModal.vue";
 
 import store from "@/store";
 
 @Options({
-  components: { SearchBar, BaseList, ButtonGroup },
+  components: {
+    SearchBar,
+    BaseList,
+    ButtonGroup,
+    TheLoader,
+    PokemonDetailsModal,
+  },
   computed: {
     pokemonList() {
       return this.$store.state.pokedex.pokemonList;
+    },
+    loading() {
+      return this.$store.state.loading;
+    },
+    display() {
+      return this.$store.state.pokedex.modal.display;
     },
   },
 })

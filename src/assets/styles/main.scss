@@ -2,9 +2,10 @@
 @import "./01-settings/typography";
 @import "./01-settings/breakpoints";
 @import "./01-settings/keyframes";
+@import "./01-settings/z-index";
 
 @import "./02-tools/mixins";
 @import "./02-tools/functions";
 
 @import "./03-generics/normalize";
-@import "./03-generics/fullheight";
+

@@ -8,8 +8,8 @@ import {
 import { capitalize } from "@/commons/helpers";
 
 export default class PokeAPIAdapter {
-  private elementsPerList = 50;
-  private rootUrl = `https://pokeapi.co/api/v2/pokemon?limit=${this.elementsPerList}`;
+  private elementsPerList = 20;
+  private rootUrl = `https://pokeapi.co/api/v2/pokemon`;
   private nextListUrl: string;
 
   constructor(private http: HttpService) {
@@ -21,44 +21,53 @@ export default class PokeAPIAdapter {
   }
 
   async getInitialPokemonList(): Promise<any> {
-    return await this.fetchPokemon(this.rootUrl);
+    return await this.fetchPokemon(
+      `${this.rootUrl}?limit=${this.elementsPerList}`
+    );
   }
+
   async getNextPokemonList() {
     return await this.fetchPokemon(this.nextListUrl);
   }
-  //getSinglePokemon() {}
 
+  async getSinglePokemon(id: number) {
+    const data = await this.http.get<any>(`${this.rootUrl}/${id}`);
+    console.log("[Adapter] data", data);
+    const res = this.shapeSinglePokemonDetail(data);
+    return res;
+  }
+
+  // Private methods
   private async fetchPokemon(resourse: string): Promise<any> {
     const data = await this.http.get<AllPokemonEndpoint>(resourse);
+    const pokemonList = this.shapePokemonList(data.results);
+
     this.nextListUrl = data.next;
 
-    const fetchedList = await this.fetchPokemonFromResultsList(data.results);
-    const shapedList = this.shapePokemonList(fetchedList);
-
-    return shapedList;
+    return pokemonList;
   }
 
-  private async fetchPokemonFromResultsList(
-    results: AllPokemonEndpointResult[]
-  ): Promise<any[]> {
-    const promiseList = results.map(
-      async (pokemon) => await this.http.get(pokemon.url)
-    );
-
-    return Promise.all(promiseList);
-  }
-
-  private shapePokemonList(fetchedList: any[]): PokemonDetail[] {
+  private shapePokemonList(fetchedList: any[]): AllPokemonEndpointResult[] {
     return fetchedList.map(
-      (pokemon: any): PokemonDetail => ({
-        id: pokemon.id,
+      (pokemon: any): AllPokemonEndpointResult => ({
         name: capitalize(pokemon.name),
-        weight: pokemon.weight,
-        height: pokemon.height,
-        types: pokemon.types.map((item: any) => item.type.name),
-        spriteUrl: pokemon.sprites.other["official-artwork"].front_default,
+        url: pokemon.url,
         isFavorite: false,
+        id: pokemon.url.split("/")[pokemon.url.split("/").length - 2],
       })
     );
+  }
+
+  private shapeSinglePokemonDetail(pokemon: any): PokemonDetail {
+    return {
+      weight: pokemon.weight,
+      height: pokemon.height,
+      types: pokemon.types
+        .map((elem: any) => elem.type.name)
+        .map((types: string) => capitalize(types)),
+      id: pokemon.id,
+      spriteUrl: pokemon.sprites.other["official-artwork"].front_default,
+      name: capitalize(pokemon.name),
+    };
   }
 }

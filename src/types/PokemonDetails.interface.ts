@@ -1,7 +1,7 @@
 export interface PokemonListElement {
   id: number;
   name: string;
-  isFavorite: boolean;
+  isFavorite?: boolean;
 }
 
 export interface PokemonDetail extends PokemonListElement {

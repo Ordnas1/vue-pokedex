@@ -1,7 +1,11 @@
-<template>
-  <li class="list-element">
+<template >
+  <li class="list-element" @click="handleClick($event)">
     <span data-test="textContent" class="text">{{ text }}</span>
-    <BaseFavoriteButton :isFavorite="isFavorite" @clicked="toggleFavorite" />
+    <BaseFavoriteButton
+      class="ignore-click"
+      :isFavorite="isFavorite"
+      @clicked="toggleFavorite"
+    />
   </li>
 </template>
 
@@ -34,7 +38,7 @@ $maxSize: toRem(570px);
 <script lang="ts">
 import { Vue, Options, prop } from "vue-class-component";
 import BaseFavoriteButton from "./BaseFavoriteButton.vue";
-import { MUTATION_TYPES } from "@/modules/pokedex/store";
+import { MUTATION_TYPES, ACTION_TYPES } from "@/modules/pokedex/store";
 import store from "@/store";
 
 class Props {
@@ -44,28 +48,28 @@ class Props {
 
 @Options({
   components: { BaseFavoriteButton },
-  computed: {},
+  computed: {
+    isFavorite() {
+      return (store.state as any).pokedex.pokemonList[Number(this.id) - 1]
+        .isFavorite;
+    },
+  },
+  emits: ["elementClicked"],
 })
 export default class BaseListElement extends Vue.with(Props) {
-  favorite = false;
+  isFavorite!: boolean;
 
-  get isFavorite(): boolean {
-    return this.favorite;
-  }
-
-  set isFavorite(value) {
-    this.favorite = value;
-  }
-
-  mounted(): void {
-    this.isFavorite = (store.state as any).pokedex.pokemonList[
-      Number(this.id) - 1
-    ].isFavorite;
-  }
   toggleFavorite(): void {
-    console.log("togglin");
     store.commit(MUTATION_TYPES.TOGGLE_FAVORITE, Number(this.id));
-    this.isFavorite = !this.isFavorite;
+  }
+
+  handleClick(event: Event): void | undefined {
+    if (
+      (event.target as Element).localName === "svg" ||
+      (event.target as Element).localName === "path"
+    )
+      return;
+    store.dispatch(ACTION_TYPES.DISPLAY_MODAL, this.id);
   }
 }
 </script>

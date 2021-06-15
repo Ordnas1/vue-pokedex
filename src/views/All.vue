@@ -1,4 +1,5 @@
 <template>
+  <pokemon-details-modal :isOpen="display" />
   <the-loader v-if="loading" />
   <div v-if="!loading" class="all">
     <header>
@@ -32,11 +33,17 @@ import SearchBar from "@/commons/components/BaseSearchBar.vue";
 import BaseList from "@/commons/components/BaseList.vue";
 import ButtonGroup from "@/commons/components/BaseButtonGroup.vue";
 import TheLoader from "@/commons/components/TheLoader.vue";
-
+import PokemonDetailsModal from "@/modules/pokedex/components/PokemonDetailsModal.vue";
 import { PokemonDetail } from "@/types/PokemonDetails.interface";
 
 @Options({
-  components: { SearchBar, BaseList, ButtonGroup, TheLoader },
+  components: {
+    SearchBar,
+    BaseList,
+    ButtonGroup,
+    TheLoader,
+    PokemonDetailsModal,
+  },
   computed: {
     pokemonList() {
       return this.$store.state.pokedex.pokemonList;
@@ -44,14 +51,17 @@ import { PokemonDetail } from "@/types/PokemonDetails.interface";
     loading() {
       return this.$store.state.loading;
     },
+    display() {
+      return this.$store.state.pokedex.modal.display;
+    },
   },
 })
 export default class All extends Vue {
+  pokemonList!: PokemonDetail[];
   loading!: boolean;
-  searchText = "";
+  display!: boolean;
 
-  mounted() {
-    console.log("mounted", this.loading);
-  }
+  searchText = "";
+  pokemonTest!: PokemonDetail;
 }
 </script>

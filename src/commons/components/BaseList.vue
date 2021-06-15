@@ -15,6 +15,7 @@
         data-test="element"
         :text="item.name"
         :id="item.id"
+        @element-clicked="handleElementClicked"
       />
     </template>
   </ul>
@@ -50,6 +51,10 @@ class Props {
 export default class BaseList extends Vue.with(Props) {
   goToHome(): void {
     this.$router.push({ name: "Home" });
+  }
+
+  handleElementClicked() {
+    console.log("handling elementClicked in baselist");
   }
 }
 </script>
